@@ -1,0 +1,93 @@
+name: CI/CD — App Runner
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      ECR_URI: ${{ secrets.ECR_URI }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      COMMIT_SHA: ${{ github.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install & test
+        run: |
+          npm ci
+          npm test
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build & push image to ECR
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.ECR_URI }}:latest
+            ${{ env.ECR_URI }}:${{ env.COMMIT_SHA }}
+          build-args: |
+            GIT_SHA=${{ env.COMMIT_SHA }}
+
+      - name: Start App Runner deployment
+        run: |
+          aws apprunner start-deployment \
+            --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }} \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Smoke test /health (wait & check)
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          # get service URL (poll until available)
+          for i in $(seq 1 20); do
+            SERVICE_URL=$(aws apprunner describe-service \
+              --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }} \
+              --query 'Service.ServiceUrl' --output text --region ${{ env.AWS_REGION }})
+            if [ -n "$SERVICE_URL" ]; then
+              echo "Service URL: $SERVICE_URL"
+              break
+            fi
+            echo "Waiting for service URL... ($i/20)"
+            sleep 3
+          done
+          if [ -z "$SERVICE_URL" ]; then
+            echo "Could not retrieve service URL" >&2
+            aws apprunner describe-service --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }} --region ${{ env.AWS_REGION }}
+            exit 1
+          fi
+
+          # poll /health until it returns status ok and version contains the commit sha
+          for i in $(seq 1 30); do
+            echo "Checking /health (attempt $i)..."
+            HTTP_CODE=$(curl -s -o /tmp/health.json -w "%{http_code}" "https://${SERVICE_URL}/health" || echo "000")
+            if [ "$HTTP_CODE" = "200" ]; then
+              cat /tmp/health.json
+              STATUS=$(jq -r '.status' /tmp/health.json)
+              VERSION=$(jq -r '.version' /tmp/health.json)
+              if [ "$STATUS" = "ok" ] && [[ "$VERSION" == "${{ env.COMMIT_SHA }}"* ]]; then
+                echo "Smoke test passed (status ok, version = $VERSION)"
+                exit 0
+              fi
+              echo "Health returned HTTP 200 but payload doesn't match. status=$STATUS version=$VERSION"
+            fi
+            sleep 5
+          done
+          echo "Smoke test failed" >&2
+          exit 1
