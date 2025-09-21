@@ -46,7 +46,6 @@ jobs:
           build-args: |
             GIT_SHA=${{ env.COMMIT_SHA }}
 
-      # NEW STEP: Wait until App Runner service is RUNNING
       - name: Wait for App Runner service to be RUNNING
         run: |
           for i in $(seq 1 30); do

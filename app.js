@@ -1,16 +1,16 @@
-// app.js
 const express = require('express');
 const app = express();
 
-// /health route
 app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    version: process.env.GIT_SHA || 'dev'
-  });
+  res.send(`
+    <h1 style="color:blue;">Hello, I'm Vijeth </h1>
+    <pre>${JSON.stringify({
+      status: 'ok',
+      version: process.env.GIT_SHA || 'dev'
+    }, null, 2)}</pre>
+  `);
 });
 
-// Redirect root / to /health
 app.get('/', (req, res) => {
   res.redirect('/health');
 });
