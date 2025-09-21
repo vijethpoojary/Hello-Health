@@ -46,6 +46,22 @@ jobs:
           build-args: |
             GIT_SHA=${{ env.COMMIT_SHA }}
 
+      # NEW STEP: Wait until App Runner service is RUNNING
+      - name: Wait for App Runner service to be RUNNING
+        run: |
+          for i in $(seq 1 30); do
+            STATUS=$(aws apprunner describe-service \
+              --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }} \
+              --query 'Service.Status' --output text \
+              --region ${{ env.AWS_REGION }})
+            echo "Service status: $STATUS"
+            if [ "$STATUS" = "RUNNING" ]; then
+              echo "Service is running!"
+              break
+            fi
+            sleep 5
+          done
+
       - name: Start App Runner deployment
         run: |
           aws apprunner start-deployment \
