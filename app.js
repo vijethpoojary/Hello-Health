@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/health', (req, res) => {
+app.get('/', (req, res) => {
   res.json({
     status: 'ok',
     version: process.env.GIT_SHA || 'dev'
