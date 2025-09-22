@@ -129,7 +129,7 @@ HELLO-HEALTH
         paths-ignore:
          - 'README.md'
     
-      ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore the             Readme push or commit*** 
+          ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore                 the Readme push or commit*** 
 
   
 - name: Checkout
@@ -227,14 +227,11 @@ HELLO-HEALTH
     done
     echo "Smoke test failed" >&2
     exit 1
-                  (Polls the App Runner service URL until it’s available.
-                   Calls /health endpoint to verify the deployment.
-                   Checks that the status is "ok" and the version matches the current commit SHA.
-                   Ensures the pipeline fails if the smoke test does not pass.)
+                  ***Polls the App Runner service URL until it’s available. Calls /health endpoint to verify the deployment.  Checks that the status is "ok" and the version matches the                       current commit SHA. Ensures the pipeline fails if the smoke test does not pass.)
   ```
   
 
-Summary:
+## Summary: ##
 1. This workflow guarantees that every push to main triggers a fully automated CI/CD pipeline:
 2. Code tested locally.
 3. Docker image built & versioned.
@@ -246,9 +243,7 @@ Summary:
 
 
 
-
-
-## Step-by-Step AWS Setup:
+## Step-by-Step AWS Setup: ##
 
 step 1: Create a private ECR repository:
         Go to AWS ECR → Create repository → Copy the repository URI.
