@@ -258,7 +258,7 @@ HELLO-HEALTH
 - **Container image URI**: Use your sample ECR image  
 - **Deployment trigger**: Automatic  
 - **Port**: `8080`  
-- **IAM Role**: `AppRunnerECRAccessRole` (so App Runner can pull from ECR)  
+- **ECR Access Role**: Select “Create new service role” ,App Runner automatically creates the role in your account with ECR access
 - Create the service → Copy the **Service ARN**
 
 ---
