@@ -37,18 +37,18 @@ Follow these steps to create a GitHub repository, push your code, and trigger CI
 - Choose Public or Private.
 - Click Create Repository
 
-# Initialize Git
+### Initialize Git ###
 git init
-# Add all project files (including Dockerfile, server.js/app.js, workflow yml)
+### Add all project files (including Dockerfile, server.js/app.js, workflow yml) ###
 git add .
-# Commit your changes
-git commit -m "Initial commit: add app, Dockerfile, workflow"
-git branch -M main
-git remote add origin https://github.com/<username>/<repo>.git
-git push -u origin main 
+### Commit your changes ###
+- git commit -m "Initial commit: add app, Dockerfile, workflow"
+- git branch -M main
+- git remote add origin https://github.com/<username>/<repo>.git
+- git push -u origin main 
 
-This triggers the GitHub Actions workflow if .github/workflows/ci-cd-apprunner.yml exists.
-GitHub Actions will run tests, build Docker image, push to ECR, deploy to App Runner, and perform a smoke test.
+- This triggers the GitHub Actions workflow if .github/workflows/ci-cd-apprunner.yml exists.
+- GitHub Actions will run tests, build Docker image, push to ECR, deploy to App Runner, and perform a smoke test.
 
 
 
