@@ -94,23 +94,23 @@ HELLO-HEALTH
 ``` WORKDIR /app ```
   - ***Sets /app as the working directory inside the container. All subsequent commands run in this folder.***
 
-- ``` COPY package*.json ./ ```
-  ***Copies package.json and package-lock.json into the container to install dependencies first (helps with Docker caching).***
+``` COPY package*.json ./ ```
+  - ***Copies package.json and package-lock.json into the container to install dependencies first (helps with Docker caching).***
 
-- ``` RUN npm ci --only=production ```
-    ***Installs only production dependencies listed in package.json. npm ci ensures a clean and consistent install using the lock file.***
+``` RUN npm ci --only=production ```
+  - ***Installs only production dependencies listed in package.json. npm ci ensures a clean and consistent install using the lock file.***
 
-- ```COPY . .```
-    ***Copies the rest of the application code into the container.***
+```COPY . .```
+  - ***Copies the rest of the application code into the container.***
 
-- ```ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA```
-    ***Sets a build-time argument GIT_SHA (default: dev) and makes it available as an environment variable inside the container.This is used in /health to display the current Git commit SHA.***
+```ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA```
+  - ***Sets a build-time argument GIT_SHA (default: dev) and makes it available as an environment variable inside the container.This is used in /health to display the current Git commit SHA.***
 
-- ```EXPOSE 8080```
-    ***Declares that the app listens on port 8080. App Runner or any container orchestrator uses this port to route traffic.***
+```EXPOSE 8080```
+  - ***Declares that the app listens on port 8080. App Runner or any container orchestrator uses this port to route traffic.***
 
--```CMD ["node", "index.js"]```
-    ***Default command to start the Node.js application when the container runs.***
+```CMD ["node", "index.js"]```
+   - ***Default command to start the Node.js application when the container runs.***
 
 
 
@@ -246,11 +246,11 @@ HELLO-HEALTH
 ## Step-by-Step AWS Setup: ##
 
 step 1: Create a private ECR repository:
-        Go to AWS ECR → Create repository → Copy the repository URI.
-        Push a sample/dummy image to ECR (8080 port allowed)
+      - Go to AWS ECR → Create repository → Copy the repository URI.
+      - Push a sample/dummy image to ECR (8080 port allowed)
 
 step 2: Create an App Runner service:
-        Repository type: Container registry
+      - Repository type: Container registry
         Provider: Amazon ECR
         Container image URI: Use your sample ECR image
         Deployment trigger: Automatic
