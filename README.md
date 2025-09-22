@@ -44,7 +44,7 @@ git add .
 ### Commit your changes ###
 - git commit -m "Initial commit: add app, Dockerfile, workflow"
 - git branch -M main
-- git remote add origin https://github.com/<username>/<repo>.git
+- git remote add origin https://github.com/username/repo.git
 - git push -u origin main 
 
 - This triggers the GitHub Actions workflow if .github/workflows/ci-cd-apprunner.yml exists.
@@ -74,63 +74,51 @@ npm install --save-dev jest supertest
 
 ## 📂 Project Structure
 HELLO-HEALTH 
-  app.js  #Express application with /health endpoint
-  index.js  #Entry point to start the server
-  Dockerfile  #Container build instructions
-  .github/workflows/ci-cd-apprunner.yml   #CI/CD pipeline
-  test/health.test.js   #Jest test for /health endpoint
-  README.md # Documentation
+  - app.js  #Express application with /health endpoint
+  - index.js  #Entry point to start the server
+  - Dockerfile  #Container build instructions
+  - .github/workflows/ci-cd-apprunner.yml   #CI/CD pipeline
+  - test/health.test.js   #Jest test for /health endpoint
+  - README.md # Documentation
   
 
 
 
-## 🐳 Dockerfile Overview
-(This Dockerfile containerizes the Hello-Health Node.js application so it can run consistently on any environment or cloud platform like AWS App Runner.)
+# 🐳 Dockerfile Overview
+###This Dockerfile containerizes the Hello-Health Node.js application so it can run consistently on any environment or cloud platform like AWS App Runner.###
 
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-ARG GIT_SHA=dev
-ENV GIT_SHA=$GIT_SHA
-EXPOSE 8080
-CMD ["node", "index.js"]
+### Explanation of Dockerfile: ###
+- FROM node:18-alpine 
+  ***Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.***
 
-## Explanation of Dockerfile:
-FROM node:18-alpine 
-  (Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.)
+- WORKDIR /app
+  ***Sets /app as the working directory inside the container. All subsequent commands run in this folder.***
 
-WORKDIR /app
-  (Sets /app as the working directory inside the container. All subsequent commands run in this folder.)
+- COPY package*.json ./
+  ***Copies package.json and package-lock.json into the container to install dependencies first (helps with Docker caching).***
 
-COPY package*.json ./
-  (Copies package.json and package-lock.json into the container to install dependencies first (helps with Docker caching).)
+- RUN npm ci --only=production
+    ***Installs only production dependencies listed in package.json. npm ci ensures a clean and consistent install using the lock file.***
 
-RUN npm ci --only=production
-    (Installs only production dependencies listed in package.json.
-    npm ci ensures a clean and consistent install using the lock file.)
+- COPY . .
+    ***Copies the rest of the application code into the container.***
 
-COPY . .
-    (Copies the rest of the application code into the container.)
+- ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA
+    ***Sets a build-time argument GIT_SHA (default: dev) and makes it available as an environment variable inside the container.This is used in /health to display the current Git commit SHA.***
 
-ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA
-    (Sets a build-time argument GIT_SHA (default: dev) and makes it available as an environment variable inside the container.
-     This is used in /health to display the current Git commit SHA.)
+- EXPOSE 8080
+    ***Declares that the app listens on port 8080. App Runner or any container orchestrator uses this port to route traffic.***
 
-EXPOSE 8080
-    (Declares that the app listens on port 8080. App Runner or any container orchestrator uses this port to route traffic.)
-
-CMD ["node", "index.js"]
-    (Default command to start the Node.js application when the container runs.)
+- CMD ["node", "index.js"]
+    ***Default command to start the Node.js application when the container runs.***
 
 
 
 
 
 
-## CI/CD Workflow — GitHub Actions Overview :
-(This workflow automates the build, test, deployment, and verification of the Hello-Health service to AWS App Runner whenever code is pushed to the main branch.)
+# CI/CD Workflow — GitHub Actions Overview :
+### This workflow automates the build, test, deployment, and verification of the Hello-Health service to AWS App Runner whenever code is pushed to the main branch. ###
 
 name: CI/CD — App Runner
 on:
