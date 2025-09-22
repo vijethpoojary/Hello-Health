@@ -129,7 +129,7 @@ HELLO-HEALTH
         paths-ignore:
          - 'README.md'
     
-          ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore                 the Readme push or commit*** 
+          ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore the Readme push or commit*** 
 
   
 - name: Checkout
@@ -170,7 +170,7 @@ HELLO-HEALTH
       ${{ env.ECR_URI }}:${{ env.COMMIT_SHA }}
     build-args: |
       GIT_SHA=${{ env.COMMIT_SHA }}
-                ***Builds the Docker image for the service.Tags the image with latest and the current commit SHA for versioning.Pushes the image to Amazon ECR.Passes the commit SHA as a                    build argument to embed in the app for /health endpoint.***
+                ***Builds the Docker image for the service.Tags the image with latest and the current commit SHA for versioning.Pushes the image to Amazon ECR.Passes the commit SHA as a build argument to embed in the app for /health endpoint.***
 
 - name: Wait for App Runner service to be RUNNING
   run: |
@@ -227,7 +227,7 @@ HELLO-HEALTH
     done
     echo "Smoke test failed" >&2
     exit 1
-                  ***Polls the App Runner service URL until it’s available. Calls /health endpoint to verify the deployment.  Checks that the status is "ok" and the version matches the                       current commit SHA. Ensures the pipeline fails if the smoke test does not pass.)
+                  ***Polls the App Runner service URL until it’s available. Calls /health endpoint to verify the deployment.  Checks that the status is "ok" and the version matches the  current commit SHA. Ensures the pipeline fails if the smoke test does not pass.)
   ```
   
 
@@ -275,6 +275,18 @@ Add the following secrets:
 | `AWS_REGION`             | e.g., `ap-south-1`                      |
 | `ECR_URI`                | Your ECR repository URI                 |
 | `APP_RUNNER_SERVICE_ARN` | Your App Runner service ARN             |
+
+## 🔑 Required GitHub Secrets
+The following secrets must be configured in your GitHub repository to allow CI/CD deployment:
+
+- `AWS_ACCESS_KEY_ID`  
+- `AWS_SECRET_ACCESS_KEY`  
+- `AWS_REGION`  
+- `ECR_URI`  
+- `APP_RUNNER_SERVICE_ARN`  
+
+> To add secrets: Go to **GitHub → Repo → Settings → Secrets → Actions → New repository secret**, then add the above.
+
 
 ---
 
