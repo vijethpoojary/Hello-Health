@@ -276,17 +276,6 @@ Add the following secrets:
 | `ECR_URI`                | Your ECR repository URI                 |
 | `APP_RUNNER_SERVICE_ARN` | Your App Runner service ARN             |
 
-## 🔑 Required GitHub Secrets
-The following secrets must be configured in your GitHub repository to allow CI/CD deployment:
-
-- `AWS_ACCESS_KEY_ID`  
-- `AWS_SECRET_ACCESS_KEY`  
-- `AWS_REGION`  
-- `ECR_URI`  
-- `APP_RUNNER_SERVICE_ARN`  
-
-> To add secrets: Go to **GitHub → Repo → Settings → Secrets → Actions → New repository secret**, then add the above.
-
 
 ---
 
