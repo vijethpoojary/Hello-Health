@@ -301,7 +301,7 @@ Example response:
          
 - Each new commit updates version with the latest Git SHA.
 - Accessing the App
-- App Runner Service URL: https://<your-app-runner-service-url>/health
+- App Runner Service URL: https://your-app-runner-service-url/health
 - Example Response:
 ```json
 {
@@ -327,7 +327,7 @@ Example response:
 - git push origin main
 
 - Open the App Runner service URL in your browser:
-- https://<your-app-runner-service-url>/health
+- https://your-app-runner-service-url/health
 
 - You will see a JSON response like:
 ```json
