@@ -258,7 +258,7 @@ HELLO-HEALTH
 - **Container image URI**: Use your sample ECR image  
 - **Deployment trigger**: Automatic  
 - **Port**: `8080`  
-- **ECR Access Role**: Select “Create new service role” ,App Runner automatically creates the role in your account with ECR access
+- **IAM Role**: `AppRunnerECRAccessRole` (so App Runner can pull from ECR)  
 - Create the service → Copy the **Service ARN**
 
 ---
@@ -340,5 +340,12 @@ Example response:
 
 - The version field corresponds to the Git commit SHA for the pushed changes.
 - Every push or commit to main automatically updates this version.
+
+# 📈 CI/CD Pipeline Output Screenshots 
+
+The workflow runs automatically on every push to `main`.  
+
+### Example: Successful Run
+![GitHub Actions Success](./screenshots/workflow-success.PNG)
 
 
