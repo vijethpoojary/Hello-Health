@@ -59,16 +59,16 @@ git add .
 Create HELLO-HEALTH directory and switch to that directory
 
 1. **Initialize Node.js project**  
-npm init -y
+```npm init -y```
 (This creates a default package.json file for the project.)
 
 2. Install dependencies
 (Install Express for building the web service:)
-npm install express
+```npm install express```
 
 3. Install development dependencies
 (Install Jest and Supertest for testing the /health endpoint:)
-npm install --save-dev jest supertest
+```npm install --save-dev jest supertest```
 
 
 
