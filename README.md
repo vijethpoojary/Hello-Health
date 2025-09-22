@@ -139,14 +139,14 @@ HELLO-HEALTH
 - ```
 - name: Checkout
   uses: actions/checkout@v4 
-          - ***Pulls the latest code from GitHub to the runner.***
+          - ***Pulls the latest code from GitHub to the runner.***```
 
 -```
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
     node-version: 18
-           - ***Configures Node.js 18 for building and testing the application.*** ```
+           - ***Configures Node.js 18 for building and testing the application.***```
   
 -```
 - name: Install & test
