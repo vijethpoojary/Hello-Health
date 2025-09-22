@@ -295,6 +295,7 @@ Example response:
   "status": "ok",
   "version": "<git_sha>"
 }
+```
 
 
          
@@ -302,12 +303,11 @@ Example response:
 - Accessing the App
 - App Runner Service URL: https://<your-app-runner-service-url>/health
 - Example Response:
-```
+```json
 {
   "status": "ok",
   "version": "41ef1ca1ec985b9b689a0c8cd7764538a94ccc82"
-}
-```
+}```
 
 ## 📝 Trigger Deployment & Check Git SHA
 
@@ -329,12 +329,11 @@ Example response:
 - https://<your-app-runner-service-url>/health
 
 - You will see a JSON response like:
-```
+```json
 {
   "status": "ok",
   "version": "0f1b2988ac5903ee686b09adbb12f24f4937da1"
-}
-```
+}```
 
 - The version field corresponds to the Git commit SHA for the pushed changes.
 - Every push or commit to main automatically updates this version.
