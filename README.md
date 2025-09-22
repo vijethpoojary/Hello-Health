@@ -134,7 +134,8 @@ HELLO-HEALTH
          - ECR_URI → Amazon ECR repository URI
          - AWS_REGION → AWS region
          - COMMIT_SHA → Current Git commit SHA)
-         - Ignore the Readme push or commit```
+         - Ignore the Readme push or commit
+  ```
 
 - ```
 - name: Checkout
