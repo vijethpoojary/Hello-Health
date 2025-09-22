@@ -31,11 +31,11 @@ It demonstrates modern DevOps practices: containerization, automated builds, dep
 
 Follow these steps to create a GitHub repository, push your code, and trigger CI/CD deployments:
 
-Go to GitHub and log in.
-Click New Repository.
-Enter a repository name (e.g., hello-health-app).
-Choose Public or Private.
-Click Create Repository
+- Go to GitHub and log in.
+- Click New Repository.
+- Enter a repository name (e.g., hello-health-app).
+- Choose Public or Private.
+- Click Create Repository
 
 # Initialize Git
 git init
