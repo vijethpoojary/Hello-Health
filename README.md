@@ -91,25 +91,25 @@ HELLO-HEALTH
 ```FROM node:18-alpine ```
   ***Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.***
 
-- WORKDIR /app
+- ``` WORKDIR /app ```
   ***Sets /app as the working directory inside the container. All subsequent commands run in this folder.***
 
-- COPY package*.json ./
+- ``` COPY package*.json ./ ```
   ***Copies package.json and package-lock.json into the container to install dependencies first (helps with Docker caching).***
 
-- RUN npm ci --only=production
+- ``` RUN npm ci --only=production ```
     ***Installs only production dependencies listed in package.json. npm ci ensures a clean and consistent install using the lock file.***
 
-- COPY . .
+- ```COPY . .```
     ***Copies the rest of the application code into the container.***
 
-- ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA
+- ```ARG GIT_SHA=dev and ENV GIT_SHA=$GIT_SHA```
     ***Sets a build-time argument GIT_SHA (default: dev) and makes it available as an environment variable inside the container.This is used in /health to display the current Git commit SHA.***
 
-- EXPOSE 8080
+- ```EXPOSE 8080```
     ***Declares that the app listens on port 8080. App Runner or any container orchestrator uses this port to route traffic.***
 
-- CMD ["node", "index.js"]
+-```CMD ["node", "index.js"]```
     ***Default command to start the Node.js application when the container runs.***
 
 
@@ -125,15 +125,15 @@ on:
   push:
     branches: [ main ]```
     
-         (Job Name: deploy
-          Runner: ubuntu-latest
-          Environment Variables:
-          ECR_URI → Amazon ECR repository URI
-          AWS_REGION → AWS region
-          COMMIT_SHA → Current Git commit SHA)
+         - Job Name: deploy
+         - Runner: ubuntu-latest
+         - Environment Variables:
+         - ECR_URI → Amazon ECR repository URI
+         - AWS_REGION → AWS region
+         - COMMIT_SHA → Current Git commit SHA)
 
-- name: Checkout
-  uses: actions/checkout@v4
+```- name: Checkout
+  uses: actions/checkout@v4 ```
           (Pulls the latest code from GitHub to the runner.)
 
 - name: Setup Node
