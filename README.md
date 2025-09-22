@@ -129,24 +129,18 @@ HELLO-HEALTH
         paths-ignore:
          - 'README.md'
     
-         - ***Job Name: deploy
-         - Runner: ubuntu-latest
-         - Environment Variables:
-         - ECR_URI → Amazon ECR repository URI
-         - AWS_REGION → AWS region
-         - COMMIT_SHA → Current Git commit SHA)
-         - Ignore the Readme push or commit*** 
+      ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore the             Readme push or commit*** 
 
   
 - name: Checkout
   uses: actions/checkout@v4 
-          - ***Pulls the latest code from GitHub to the runner.***
+          ***Pulls the latest code from GitHub to the runner.***
 
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
     node-version: 18
-           - ***Configures Node.js 18 for building and testing the application.***
+           ***Configures Node.js 18 for building and testing the application.***
   
 - name: Install & test
   run: |
@@ -160,11 +154,11 @@ HELLO-HEALTH
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: ${{ secrets.AWS_REGION }}
-             - ***Authenticates the GitHub runner with AWS to allow deployment.***
+             ***Authenticates the GitHub runner with AWS to allow deployment.***
 
 - name: Login to Amazon ECR
   uses: aws-actions/amazon-ecr-login@v1
-              ***Logs into the private ECR repository to allow Docker image pushes.)
+              ***Logs into the private ECR repository to allow Docker image pushes.***
 
 - name: Build & push image to ECR
   uses: docker/build-push-action@v4
@@ -176,10 +170,7 @@ HELLO-HEALTH
       ${{ env.ECR_URI }}:${{ env.COMMIT_SHA }}
     build-args: |
       GIT_SHA=${{ env.COMMIT_SHA }}
-                (Builds the Docker image for the service.
-                 Tags the image with latest and the current commit SHA for versioning.
-                 Pushes the image to Amazon ECR.
-                 Passes the commit SHA as a build argument to embed in the app for /health endpoint.)
+                ***Builds the Docker image for the service.Tags the image with latest and the current commit SHA for versioning.Pushes the image to Amazon ECR.Passes the commit SHA as a                    build argument to embed in the app for /health endpoint.***
 
 - name: Wait for App Runner service to be RUNNING
   run: |
@@ -195,14 +186,14 @@ HELLO-HEALTH
       fi
       sleep 5
     done
-                  (Waits until the App Runner service is in the RUNNING state before starting a new deployment.)
+                  ***Waits until the App Runner service is in the RUNNING state before starting a new deployment.***
 
 - name: Start App Runner deployment
   run: |
     aws apprunner start-deployment \
       --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }} \
       --region ${{ env.AWS_REGION }}
-                   (Triggers App Runner to deploy the new Docker image pushed to ECR.)
+                   ***Triggers App Runner to deploy the new Docker image pushed to ECR.***
   
 
 - name: Smoke test /health (wait & check)
