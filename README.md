@@ -128,8 +128,9 @@ HELLO-HEALTH
         branches: [ main ]
         paths-ignore:
          - 'README.md'
+         - 'screenshots/**'
     
-          ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore the Readme push or commit*** 
+          ***Job Name: deploy, Runner: ubuntu-latest, Environment Variables: ECR_URI → Amazon ECR repository URI, AWS_REGION → AWS region, COMMIT_SHA → Current Git commit SHA, Ignore the Readme and screenshots of my work push or commit*** 
 
   
 - name: Checkout
