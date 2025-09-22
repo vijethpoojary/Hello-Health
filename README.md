@@ -303,7 +303,6 @@ Example response:
          
 - Each new commit updates version with the latest Git SHA.
 - Accessing the App
-- App Runner Service URL: https://your-app-runner-service-url/health
 - Example Response:
 ```json
 {
@@ -329,7 +328,6 @@ Example response:
 - git push origin main
 
 - Open the App Runner service URL in your browser:
-- https://your-app-runner-service-url/health
 
 - You will see a JSON response like:
 ```json
@@ -346,10 +344,22 @@ Example response:
 
 The workflow runs automatically on every push to `main`.  
 
-### Example: Successful Broswer Output 
-![GitHub Actions Success](./screenshots/Final_output-browser1.PNG)
+### Example: Successful Browser Output 
+![Browser Output after Push](./screenshots/Final_output-browser1.PNG)
 
-## Version changes after every push for example
+## Version changes after every push
+![Browser Output Version Update](./screenshots/Final_output-browser2.PNG)
 
+## App Runner Logs Screenshot
+![App Runner Logs](./screenshots/Apprunner-output.PNG)
 
+## Container Registry Image Screenshot
+![ECR Image](./screenshots/Container_Registry.PNG)
 
+## Successful GitHub Actions Pipeline Run
+![GitHub Actions Logs](./screenshots/Logs-github.PNG)
+![GitHub Actions Logs 1](./screenshots/github-log1.PNG)
+
+# 🌐 App Runner Service URL
+The deployed service is available at:  
+[https://f5pym2cfat.us-east-1.awsapprunner.com/health](https://f5pym2cfat.us-east-1.awsapprunner.com/health)
