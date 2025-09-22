@@ -345,7 +345,7 @@ Example response:
 The workflow runs automatically on every push to `main`.  
 
 ### Example: Successful Browser Output 
-![Browser Output after Push](./screenshots/Final_output-browser1.PNG)
+![Browser Output after Push](./screenshots/Final_ouput-browser1.PNG)
 
 ## Version changes after every push
 ![Browser Output Version Update](./screenshots/Final_output-browser2.PNG)
