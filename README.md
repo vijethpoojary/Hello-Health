@@ -243,76 +243,100 @@ HELLO-HEALTH
 
 
 
-## Step-by-Step AWS Setup: ##
+## Step-by-Step AWS Setup
 
-step 1: Create a private ECR repository:
-      - Go to AWS ECR → Create repository → Copy the repository URI.
-      - Push a sample/dummy image to ECR (8080 port allowed)
+### Step 1: Create a private ECR repository
+- Go to **AWS ECR → Create repository**
+- Copy the **repository URI**
+- Push a sample/dummy image to ECR (make sure **port 8080** is exposed)
 
-step 2: Create an App Runner service:
-      - Repository type: Container registry
-        Provider: Amazon ECR
-        Container image URI: Use your sample ECR image
-        Deployment trigger: Automatic
-        Port: 8080
-        IAM Role: AppRunnerECRAccessRole (so App Runner can pull from ECR)
-        Create the service → Copy the Service ARN
+---
 
-step 3: Create GitHub Secrets:
-        Go to GitHub Repo → Settings → Secrets → Actions → New repository secret
-        Add:
-        AWS_ACCESS_KEY_ID → Your AWS access key
-        AWS_SECRET_ACCESS_KEY → Your AWS secret key
-        AWS_REGION → e.g., ap-south-1
-        ECR_URI → Your ECR repository URI
-        APP_RUNNER_SERVICE_ARN → App Runner service ARN
+### Step 2: Create an App Runner service
+- **Repository type**: Container registry  
+- **Provider**: Amazon ECR  
+- **Container image URI**: Use your sample ECR image  
+- **Deployment trigger**: Automatic  
+- **Port**: `8080`  
+- **IAM Role**: `AppRunnerECRAccessRole` (so App Runner can pull from ECR)  
+- Create the service → Copy the **Service ARN**
 
-step 4: Push code to GitHub repository:
-        Workflow triggers automatically on main branch push.
-        Docker image is built and deployed to App Runner.
-        Visit App Runner URL → /health returns JSON:
-         {
-           "status": "ok",
-           "version": "<git_sha>"
-         }
+---
+
+### Step 3: Create GitHub Secrets
+Go to **GitHub Repo → Settings → Secrets → Actions → New repository secret**  
+
+Add the following secrets:
+
+| Secret Name             | Value                                    |
+|--------------------------|------------------------------------------|
+| `AWS_ACCESS_KEY_ID`      | Your AWS access key                     |
+| `AWS_SECRET_ACCESS_KEY`  | Your AWS secret key                     |
+| `AWS_REGION`             | e.g., `ap-south-1`                      |
+| `ECR_URI`                | Your ECR repository URI                 |
+| `APP_RUNNER_SERVICE_ARN` | Your App Runner service ARN             |
+
+---
+
+### Step 4: Push code to GitHub repository
+- Commit and push to the **main branch**  
+- GitHub Actions workflow triggers automatically  
+- Docker image is **built and deployed** to App Runner  
+
+---
+
+### Step 5: Verify deployment
+Visit your **App Runner service URL** → check `/health` endpoint  
+
+Example response:  
+
+```json
+{
+  "status": "ok",
+  "version": "<git_sha>"
+}
 
 
          
-Each new commit updates version with the latest Git SHA.
-Accessing the App
-App Runner Service URL: https://<your-app-runner-service-url>/health
-Example Response:
+- Each new commit updates version with the latest Git SHA.
+- Accessing the App
+- App Runner Service URL: https://<your-app-runner-service-url>/health
+- Example Response:
+```
 {
   "status": "ok",
   "version": "41ef1ca1ec985b9b689a0c8cd7764538a94ccc82"
 }
+```
 
 ## 📝 Trigger Deployment & Check Git SHA
 
-Every time you push changes to the main branch, the GitHub Actions CI/CD workflow automatically:
-Builds and tests your code.
-Builds a Docker image with the current Git commit SHA.
-Pushes the image to Amazon ECR.
-Deploys it to AWS App Runner.
-Performs a smoke test on /health to confirm deployment.
+- Every time you push changes to the main branch, the GitHub Actions CI/CD workflow automatically:
+- Builds and tests your code.
+- Builds a Docker image with the current Git commit SHA.
+- Pushes the image to Amazon ECR.
+- Deploys it to AWS App Runner.
+- Performs a smoke test on /health to confirm deployment.
 
 ## Steps to Trigger a Deployment:
-Make a change in your Express code (e.g., add a new message or endpoint).
-Stage and commit your changes:
-git add .
-git commit -m "Your commit message"
-git push origin main
+- Make a change in your Express code (e.g., add a new message or endpoint).
+- Stage and commit your changes:
+- git add .
+- git commit -m "Your commit message"
+- git push origin main
 
-Open the App Runner service URL in your browser:
-https://<your-app-runner-service-url>/health
+- Open the App Runner service URL in your browser:
+- https://<your-app-runner-service-url>/health
 
-You will see a JSON response like:
+- You will see a JSON response like:
+```
 {
   "status": "ok",
   "version": "0f1b2988ac5903ee686b09adbb12f24f4937da1"
 }
+```
 
-The version field corresponds to the Git commit SHA for the pushed changes.
-Every push or commit to main automatically updates this version.
+- The version field corresponds to the Git commit SHA for the pushed changes.
+- Every push or commit to main automatically updates this version.
 
 
