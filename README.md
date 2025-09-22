@@ -134,34 +134,35 @@ HELLO-HEALTH
          - ECR_URI → Amazon ECR repository URI
          - AWS_REGION → AWS region
          - COMMIT_SHA → Current Git commit SHA)
-         - Ignore the Readme push or commit
-  ```
+         - Ignore the Readme push or commit ```
 
 - ```
 - name: Checkout
   uses: actions/checkout@v4 
-          - Pulls the latest code from GitHub to the runner.```
+          - ***Pulls the latest code from GitHub to the runner.***
 
+-```
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
     node-version: 18
-           (Configures Node.js 18 for building and testing the application.)
-
+           - ***Configures Node.js 18 for building and testing the application.*** ```
+  
+-```
 - name: Install & test
   run: |
     npm ci
     npm test
-            (Installs project dependencies using npm ci.
-             Runs tests using Jest + Supertest to ensure /health endpoint works correctly.)
-
+            ***Installs project dependencies using npm ci. Runs tests using Jest + Supertest to ensure /health endpoint works correctly.*** ```
+  
+-```
 - name: Configure AWS credentials
   uses: aws-actions/configure-aws-credentials@v2
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: ${{ secrets.AWS_REGION }}
-             (Authenticates the GitHub runner with AWS to allow deployment.)
+             - ***Authenticates the GitHub runner with AWS to allow deployment.*** ```
 
 - name: Login to Amazon ECR
   uses: aws-actions/amazon-ecr-login@v1
