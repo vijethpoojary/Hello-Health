@@ -89,7 +89,7 @@ HELLO-HEALTH
 
 ### Explanation of Dockerfile: ###
 ```FROM node:18-alpine ```
-  ***Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.***
+  - ***Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.***
 
 - ``` WORKDIR /app ```
   ***Sets /app as the working directory inside the container. All subsequent commands run in this folder.***
