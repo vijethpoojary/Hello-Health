@@ -120,19 +120,24 @@ HELLO-HEALTH
 # CI/CD Workflow — GitHub Actions Overview :
 ### This workflow automates the build, test, deployment, and verification of the Hello-Health service to AWS App Runner whenever code is pushed to the main branch. ###
 
-- ```name: CI/CD — App Runner
+- ```
+    name: CI/CD — App Runner
     on:
       push:
         branches: [ main ]
+        paths-ignore:
+         - 'README.md'
     
          - Job Name: deploy
          - Runner: ubuntu-latest
          - Environment Variables:
          - ECR_URI → Amazon ECR repository URI
          - AWS_REGION → AWS region
-         - COMMIT_SHA → Current Git commit SHA)```
+         - COMMIT_SHA → Current Git commit SHA)
+         - Ignore the Readme push or commit```
 
-- ```- name: Checkout
+- ```
+- name: Checkout
   uses: actions/checkout@v4 
           - Pulls the latest code from GitHub to the runner.```
 
