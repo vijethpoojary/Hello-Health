@@ -88,7 +88,7 @@ HELLO-HEALTH
 ###This Dockerfile containerizes the Hello-Health Node.js application so it can run consistently on any environment or cloud platform like AWS App Runner.###
 
 ### Explanation of Dockerfile: ###
-- FROM node:18-alpine 
+```FROM node:18-alpine ```
   ***Uses a lightweight Node.js 18 image based on Alpine Linux as the base image.***
 
 - WORKDIR /app
@@ -120,10 +120,10 @@ HELLO-HEALTH
 # CI/CD Workflow — GitHub Actions Overview :
 ### This workflow automates the build, test, deployment, and verification of the Hello-Health service to AWS App Runner whenever code is pushed to the main branch. ###
 
-name: CI/CD — App Runner
+```name: CI/CD — App Runner
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]```
     
          (Job Name: deploy
           Runner: ubuntu-latest
