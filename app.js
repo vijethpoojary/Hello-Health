@@ -8,7 +8,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Redirect root / to /health
+// Redirect root / to /health  (redirect->health)
 app.get('/', (req, res) => {
   res.redirect('/health');
 });
