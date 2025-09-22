@@ -346,9 +346,10 @@ Example response:
 
 The workflow runs automatically on every push to `main`.  
 
-### Example: Successful Run
-![GitHub Actions Success](./screenshots/workflow-success.PNG)
-![GitHub Actions Success](./screenshots/gisul3.PNG)
+### Example: Successful Broswer Output 
+![GitHub Actions Success](./screenshots/Final_output-browser1.PNG)
+
+## Version changes after every push for example
 
 
 
